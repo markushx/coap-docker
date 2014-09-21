@@ -89,12 +89,19 @@ RUN npm install coap-cli -g
 # Python
 
 # txThings
+# TODO: Check installation of python-setuptools
+RUN apt-get update && apt-get install -y python-twisted-core python-twisted-web python-openssl python-setuptools python-dev
 WORKDIR /root/src
 RUN git clone https://github.com/siskin/txThings.git
+WORKDIR /root/src/txThings
+# TODO: Seems not to work. Fix it
+RUN python setup.py install
 
 # coapy
 WORKDIR /root/src
 RUN git clone git://git.code.sf.net/p/coapy/code coapy
+WORKDIR /root/src/coapy
+RUN python setup.py install
 
 # CoAP
 WORKDIR /root/src
@@ -145,10 +152,11 @@ RUN rm copper_cu-0.18.4-fx.xpi
 WORKDIR /root/src
 RUN rmdir copper
 
-RUN apt-get install -y x11vnc xvfb
-RUN mkdir ~/.vnc
+# TODO: insta, setup and start xserver before using vnx
+#RUN apt-get install -y x11vnc xvfb
+#RUN mkdir ~/.vnc
 # Setup a password
-RUN x11vnc -storepasswd 1234 ~/.vnc/passwd
+#RUN x11vnc -storepasswd 1234 ~/.vnc/passwd
 
 ################
 
@@ -158,4 +166,7 @@ RUN x11vnc -storepasswd 1234 ~/.vnc/passwd
 ################
 
 WORKDIR /root/src
-EXPOSE 5683 61616
+EXPOSE 5683
+
+# Needed for vnc (if configured)
+#EXPOSE 61616
