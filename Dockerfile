@@ -166,7 +166,12 @@ RUN rmdir copper
 ################
 
 WORKDIR /root/src
+
+# Default CoAP port
 EXPOSE 5683
 
+# CoAP port to increase header compression efficiency in 6LoWPANs
+EXPOSE 61616
+
 # Needed for vnc (if configured)
-#EXPOSE 61616
+#EXPOSE 5999
